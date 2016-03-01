@@ -121,29 +121,38 @@ cleanStop = do
 
 main = do
     args <- getArgs
-    initCurses
-    if (length args) < 1 then initColors 60 233
+    if (findArgs "-h" args) < (length args) 
+    then do
+        putStrLn "USAGE: hasklock [option] <value (if applicable)>"
+        putStrLn "\nOPTIONS"
+        putStrLn "-s [number]:  Sets the size of the clock. Default is 4, minimum is 2."
+        putStrLn "-f [number]:  Sets the foreground color. Default is 60, range 0-256."
+        putStrLn "-f [number]:  Sets the background color. Default is 233, range 0-256."
+        putStrLn "-h:           Displays this message."
     else do
-        let onArg = findArgs "-f" args
-            offArg = findArgs "-b" args
---        if onArg == 0 || offArg == 0 then initColors 60 233
-        if onArg >= (length args) then
-            if offArg >= (length args)  then initColors 60 233
-            else initColors 60 (read (args !! (offArg + 1)))  
-        else if offArg >= (length args)  then initColors (read (args !! (onArg + 1))) 233
-        else initColors (read (args !! (onArg + 1))) (read (args !! (offArg + 1)))
-    cursSet CursorInvisible
-    echo False
-    w <-initScr
-    (y,x) <- scrSize
-    cBreak True
-    noDelay w True
-    keypad w True
-    let sigwinch = fromJust cursesSigWinch
-    installHandler sigwinch (Catch resize) Nothing
-    installHandler keyboardSignal (CatchOnce cleanStop) Nothing
-    refresh
-    update
-    tick w y x
-    putStrLn (show sigwinch)
-    endWin
+        initCurses
+        if (length args) < 1 then initColors 60 233
+        else do
+            let onArg = findArgs "-f" args
+                offArg = findArgs "-b" args
+    --        if onArg == 0 || offArg == 0 then initColors 60 233
+            if onArg >= (length args) then
+                if offArg >= (length args)  then initColors 60 233
+                else initColors 60 (read (args !! (offArg + 1)))  
+            else if offArg >= (length args)  then initColors (read (args !! (onArg + 1))) 233
+            else initColors (read (args !! (onArg + 1))) (read (args !! (offArg + 1)))
+        cursSet CursorInvisible
+        echo False
+        w <-initScr
+        (y,x) <- scrSize
+        cBreak True
+        noDelay w True
+        keypad w True
+        let sigwinch = fromJust cursesSigWinch
+        installHandler sigwinch (Catch resize) Nothing
+        installHandler keyboardSignal (CatchOnce cleanStop) Nothing
+        refresh
+        update
+        tick w y x
+        putStrLn (show sigwinch)
+        endWin
