@@ -11,10 +11,6 @@ import System.Posix.Signals
 import UI.HSCurses.Curses
 import UI.HSCurses.CursesHelper
 
--- TODO LIST                                STATUS
--- Custom colors                            Not started
--- Fix arguments after size                 Not started
-
 led = convertAttributes[Reverse]
 
 initColors colorOn colorOff = do
@@ -23,12 +19,6 @@ initColors colorOn colorOff = do
 
 on = Pair 1
 off = Pair 2
-
---scale = 4
-
---findArgs :: Eq a => a -> [a] -> Int
---findArgs x ls = 
---    foldl (\i q -> if q == x then i else i + 1) 0 ls
 
 findArgs :: Eq a => a -> [a] -> Int
 findArgs x ls = length $ takeWhile (/= x) ls
@@ -39,7 +29,6 @@ scale = do
     if (length args) == 0 then return 4
     else do
         let sizeArg = (findArgs "-s" args) 
---        if sizeArg == 0 then return 4
         if sizeArg >= (length args) then return 4
         else return (read $ args !! (sizeArg + 1)) 
 
@@ -52,7 +41,6 @@ displayLED w y x color = do
           draw i s = do
                   mvWAddStr w (y + i) x (take(s) (repeat ' '))
                   draw (i - 1) s
---    mvWAddStr w (y+1) x  "  "
 
 displayColumnPair :: Window -> Int -> Int -> Int -> [Char] -> IO()
 displayColumnPair _ _ _ _ [] = return ()
@@ -72,8 +60,7 @@ tick w y x = do
     s <- scale
     let y' = y `div` 2 - (3 * s) `div` 2
     let x' = x `div` 2 - 6 * s
---    let y' = 0
---    let x' = 0
+
     zonedTime <- getZonedTime
     let timeString = tail $ dropWhile(/= ' ') (show zonedTime)
         hour = read $ takeWhile(/= ':') timeString
@@ -127,7 +114,7 @@ main = do
         putStrLn "\nOPTIONS"
         putStrLn "-s [number]:  Sets the size of the clock. Default is 4, minimum is 2."
         putStrLn "-f [number]:  Sets the foreground color. Default is 60, range 0-256."
-        putStrLn "-f [number]:  Sets the background color. Default is 233, range 0-256."
+        putStrLn "-b [number]:  Sets the background color. Default is 233, range 0-256."
         putStrLn "-h:           Displays this message."
     else do
         initCurses
@@ -135,7 +122,6 @@ main = do
         else do
             let onArg = findArgs "-f" args
                 offArg = findArgs "-b" args
-    --        if onArg == 0 || offArg == 0 then initColors 60 233
             if onArg >= (length args) then
                 if offArg >= (length args)  then initColors 60 233
                 else initColors 60 (read (args !! (offArg + 1)))  
