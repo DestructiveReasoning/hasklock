@@ -17,28 +17,31 @@ import UI.HSCurses.CursesHelper
 
 led = convertAttributes[Reverse]
 
-initColors = do
-    initPair (Pair 1) (Color 60) defaultBackground
-    initPair (Pair 2) (Color 233) defaultBackground
+initColors colorOn colorOff = do
+    initPair (Pair 1) (Color colorOn) defaultBackground
+    initPair (Pair 2) (Color colorOff) defaultBackground
 
 on = Pair 1
 off = Pair 2
 
 --scale = 4
 
+--findArgs :: Eq a => a -> [a] -> Int
+--findArgs x ls = 
+--    foldl (\i q -> if q == x then i else i + 1) 0 ls
+
 findArgs :: Eq a => a -> [a] -> Int
-findArgs x ls = 
-    foldl (\i q -> if q == x then i else i + 1) 0 ls
+findArgs x ls = length $ takeWhile (/= x) ls
 
 scale :: IO Int
 scale = do
     args <- getArgs
-    if (length args) == 1 then return 4
+    if (length args) == 0 then return 4
     else do
         let sizeArg = (findArgs "-s" args) 
-        if sizeArg == 0 then return 4
-        else if sizeArg >= (length args) then return 4
-        else return (read $ args !! sizeArg)
+--        if sizeArg == 0 then return 4
+        if sizeArg >= (length args) then return 4
+        else return (read $ args !! (sizeArg + 1)) 
 
 displayLED w y x color = do
 --    putStrLn "illuminating LED"
@@ -119,7 +122,16 @@ cleanStop = do
 main = do
     args <- getArgs
     initCurses
-    initColors
+    if (length args) < 1 then initColors 60 233
+    else do
+        let onArg = findArgs "-f" args
+            offArg = findArgs "-b" args
+--        if onArg == 0 || offArg == 0 then initColors 60 233
+        if onArg >= (length args) then
+            if offArg >= (length args)  then initColors 60 233
+            else initColors 60 (read (args !! (offArg + 1)))  
+        else if offArg >= (length args)  then initColors (read (args !! (onArg + 1))) 233
+        else initColors (read (args !! (onArg + 1))) (read (args !! (offArg + 1)))
     cursSet CursorInvisible
     echo False
     w <-initScr
