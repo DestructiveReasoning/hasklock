@@ -15,7 +15,7 @@ replaces=()
 backup=()
 options=()
 install=hasklock.install
-source=($pkgname::git+https://github.com/DestructiveReasoning/Conway.git)
+source=($pkgname::git+https://github.com/DestructiveReasoning/hasklock.git)
 noextract=()
 md5sums=('SKIP') #generate with 'makepkg -g'
 
