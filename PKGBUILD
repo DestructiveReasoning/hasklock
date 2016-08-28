@@ -8,8 +8,9 @@ url="https://github.com/DestructiveReasoning/hasklock"
 license=('BSD')
 groups=()
 depends=('ncurses')
+#makedepends=('git','haskell-text','haskell-hscurses')
 makedepends=('git')
-provides=()
+provides=('hasklock')
 conflicts=()
 replaces=()
 backup=()
@@ -27,7 +28,7 @@ build() {
   msg "Connecting to GIT server...."
 
   if [[ -d "$_gitname" ]]; then
-    cd "$_gitname" && git pull origin
+    cd "$_gitname" && git pull origin master
     msg "The local files are updated."
   else
     git clone "$_gitroot" "$_gitname"
@@ -45,7 +46,7 @@ build() {
   #
 #./autogen.sh
 #  ./configure --prefix=/usr
-  make 
+#  make 
 }
 
 package() {
