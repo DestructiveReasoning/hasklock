@@ -1,0 +1,16 @@
+pkgbase = hasklock
+	pkgdesc = A binary clock in ncurses written in Haskell
+	pkgver = 0.1.0
+	pkgrel = 2
+	url = https://github.com/DestructiveReasoning/hasklock
+	install = hasklock.install
+	arch = x86_64
+	license = BSD
+	makedepends = git
+	depends = ncurses
+	provides = hasklock
+	source = hasklock::git+https://github.com/DestructiveReasoning/hasklock.git
+	md5sums = SKIP
+
+pkgname = hasklock
+

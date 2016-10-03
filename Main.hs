@@ -29,8 +29,8 @@ scale = do
     if (length args) == 0 then return 4
     else do
         let sizeArg = (findArgs "-s" args) 
-        if sizeArg >= (length args) then return 4
-        else return (read $ args !! (sizeArg + 1)) 
+        if sizeArg >= (length args) then return 2
+        else return ((read $ (args !! (sizeArg + 1)))*2) 
 
 displayLED w y x color = do
 --    putStrLn "illuminating LED"
@@ -112,7 +112,7 @@ main = do
     then do
         putStrLn "USAGE: hasklock [option] <value (if applicable)>"
         putStrLn "\nOPTIONS"
-        putStrLn "-s [number]:  Sets the size of the clock. Default is 4, minimum is 2."
+        putStrLn "-s [number]:  Sets the size of the clock. Default is 2, minimum is 1."
         putStrLn "-f [number]:  Sets the foreground color. Default is 60, range 0-256."
         putStrLn "-b [number]:  Sets the background color. Default is 233, range 0-256."
         putStrLn "-h:           Displays this message."
