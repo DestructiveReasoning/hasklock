@@ -1,6 +1,9 @@
 Hasklock
 ========
-Hasklock is a Haskell program that displays a binary clock in the terminal, with the HSCurses library.
+Hasklock is a Haskell program that displays a binary clock in the terminal, with the HSCurses library.<br />
+The Hasklock package comes with two binaries:
+* hasklock: The basic binary clock, which allows customization of foreground and background colors, as well as clock size
+* randhasklock: A convenience script allowing for the randomization of foreground and/or background colors.
 
 Dependencies
 ------------
@@ -22,7 +25,7 @@ $ cd hasklock
 
 Building Hasklock
 -----------------
-As mentioned previously, if it is desired to build Hasklock, you must have ncurses, ghc, and hscurses installed.
+As mentioned previously, if it is desired to build Hasklock, you must have ncurses, ghc, and hscurses installed.<br />
 Building Hasklock can be accomplished as follows:
 ```
 $ git clone https://github.com/DestructiveReasoning/hasklock
