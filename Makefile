@@ -1,7 +1,7 @@
 builddir="build/"
 
 Hasklock: init
-	ghc src/Main.hs -odir build -o bin/Hasklock
+	ghc src/Main.hs -odir $(builddir) -o bin/Hasklock
 	chmod +x bin/randhasklock
 
 init:
