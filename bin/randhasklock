@@ -6,9 +6,12 @@ FGCOL=0
 BGCOL=0
 
 if [ -z $1 ]; then
-	echo "[WARN] No b/f specified - generating random foreground color"
+	echo "Usage: randhasklock <bf> [size]"
+	echo "  <bf>: Include a 'b' for random background, and an 'f' for random foreground. Including both (i.e. randhasklock bf) randomizes both foreground and background."
+	echo "  size: Optional size parameter, default is 1."
 	FGCOL=$(( ( RANDOM % 256 ) ))
 	OPTS="-f $FGCOL"
+	exit 1
 else
 	BG=$(echo $1 | grep -o -P 'b')
 	if [ $BG ]; then
