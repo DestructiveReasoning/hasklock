@@ -29,6 +29,7 @@ As mentioned previously, if it is desired to build Hasklock, you must have ncurs
 Building Hasklock can be accomplished as follows:
 ```
 $ git clone https://github.com/DestructiveReasoning/hasklock
+$ cd hasklock
 $ make
 # make install
 ```
