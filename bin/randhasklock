@@ -15,17 +15,17 @@ if [ -z $1 ]; then
 else
 	BG=$(echo $1 | grep -o -P 'b')
 	if [ $BG ]; then
-		echo "[ECHO] Generating random background color..."
+#		echo "[ECHO] Generating random background color..."
 		BGCOL=$(( ( RANDOM % 256 ) ))
 		OPTS="-b $BGCOL"
 		FG=$(echo $1 | grep -o -P 'f')
 		if [ $FG ]; then
-			echo "[ECHO] Generating random foreground color..."
+#			echo "[ECHO] Generating random foreground color..."
 			FGCOL=$(( ( RANDOM % 256 ) ))
 			OPTS="$OPTS -f $FGCOL"
 		fi
 	else
-		echo "[ECHO] Generating random foreground color..."
+#		echo "[ECHO] Generating random foreground color..."
 		FGCOL=$(( ( RANDOM % 256 ) ))
 		OPTS="-f $FGCOL"
 	fi
@@ -38,6 +38,6 @@ else
 fi
 
 OPTS="$OPTS -s $SIZE"
-echo $OPTS
 /bin/hasklock $OPTS
+echo $OPTS
 
